@@ -1,0 +1,108 @@
+## Phase 1: User & Group Management
+
+* Create groups: Generate two distinct groups named developers and accounting.
+      ### Implementation
+
+      groupadd developers 
+
+      groupadd accounting.
+
+* Add users: Create employee user accounts and assign them to their respective groups.
+     ### Implementation
+
+     i make one user for each group as he don't specify the number of user's he want me to make .
+
+     useradd developer-user : here i make the user 
+     passwd developer-user : here i make password for the user so that he can login 
+
+
+     useradd accounting-user :here i make the user 
+     passwd accounting-user :here i make password for the user so that he can login
+
+     
+     usermod -aG developers developer-user : here i add the user to it's group as secondary group 
+     usermod -aG accounting accounting-user : here i add the user to it's group as secondary group
+
+* Enforce password policies: Set up strict password expiration rules using the chage command.
+    ### Implementation
+
+    here i make the restriction on the user's i have make , i make 30 as he don't specify 
+
+    chage -M 30 developer-user
+
+    chage -M 30 accounting-user
+
+	
+* Configure administrative access: Grant sudo privileges to exactly one designated administrator account.
+  ### Implementation
+
+  here he want me to give the sudo privilage to administrator account , so i make it to developer-user i added 
+  that user to the wheel group to give him the privillages.
+ 
+  usermod -aG wheel developer-user
+
+## Phase 2: File System Structure & Permissions
+
+* Create directories: Build the infrastructure paths at /data/dev and /data/finance.
+   ### Implementation
+
+   here i make the directory called data under / , and make two directories under data 
+   mkdir /data
+   mkdir /data/dev
+   mkdir /data/finance
+
+* Restrict ownership: Apply chown and chmod so only respective group members can access their directory.
+   ### Implementation
+ 
+   Here i have changed the owner user 
+   chown developer-user /data/dev/
+   chown accounting-user /data/finance/
+
+   Here i have changed the owner group 
+   chown :developers /data/dev/
+   chown :accounting /data/finance/
+
+   Here i applied chmod so i have give the full permission to owner user and owner group 
+   chmod 771 /data/dev/
+   chmod 771 /data/finance/
+
+* Block external access: Deny all read, write, and execute permissions for unprivileged or outside users.
+   ### Implementation
+
+   Here i have deneyied other user permission and make access for owner user and owner group 
+   chmod 770 /data/finance/
+   chmod 770 /data/dev/
+
+* Apply special permissions: Enable the Sticky Bit on shared folders to prevent users from deleting files owned by others.
+   ### Implementation
+
+   Here i make sticy bit so that no one can delete other users files 
+   chmod +t /data/finance/
+   chmod +t /data/dev/
+
+## Phase 3: Software & Service Management
+
+* Install web server: Deploy Apache or Nginx using the system package manager (dnf, yum, or apt).
+  ### Implementation
+   Installed Nginx using the system package manager:
+   yum install nginx 
+
+* Enable boot persistence: Configure the web service to start automatically upon system boot using systemctl.
+  ### Implementation
+
+  systemctl enable nginx
+
+## Phase 4: Networking & Security Configuration
+  ### Implementation
+  in the screen in phase 4 
+* Set static IP: Configure a permanent, static network IP address using nmcli or nmtui.
+* Harden the firewall: Adjust firewalld or ufw to allow traffic only on ports 80 (HTTP) and 22 (SSH).
+* Secure remote access: Edit the SSH configuration file to completely disable direct root login.
+## Phase 5: Resource Monitoring
+
+* Monitor system health: Use top, df -h, and free -m to inspect resources and log outputs to a text file
+  ### Implementation
+  top >>File.txt
+  df -h >>File.txt
+  free -m >>File.txt
+

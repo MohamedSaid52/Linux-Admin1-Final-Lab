@@ -1,0 +1,28 @@
+## Phase 1: User & Group Management
+
+* Create groups: Generate two distinct groups named developers and accounting.
+* Add users: Create employee user accounts and assign them to their respective groups.
+* Enforce password policies: Set up strict password expiration rules using the chage command.
+* Configure administrative access: Grant sudo privileges to exactly one designated administrator account.
+
+## Phase 2: File System Structure & Permissions
+
+* Create directories: Build the infrastructure paths at /data/dev and /data/finance.
+* Restrict ownership: Apply chown and chmod so only respective group members can access their directory.
+* Block external access: Deny all read, write, and execute permissions for unprivileged or outside users.
+* Apply special permissions: Enable the Sticky Bit on shared folders to prevent users from deleting files owned by others.
+
+## Phase 3: Software & Service Management
+
+* Install web server: Deploy Apache or Nginx using the system package manager (dnf, yum, or apt).
+* Enable boot persistence: Configure the web service to start automatically upon system boot using systemctl.
+
+## Phase 4: Networking & Security Configuration
+
+* Set static IP: Configure a permanent, static network IP address using nmcli or nmtui.
+* Harden the firewall: Adjust firewalld or ufw to allow traffic only on ports 80 (HTTP) and 22 (SSH).
+* Secure remote access: Edit the SSH configuration file to completely disable direct root login.
+
+## Phase 5: Resource Monitoring
+
+* Monitor system health: Use top, df -h, and free -m to inspect resources and log outputs to a text file
